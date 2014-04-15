@@ -1,0 +1,25 @@
+
+<% if @authenticated %>
+
+    <p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "See my products" %> </p>
+
+
+<% else %>
+
+<p><%= link_to "Sign up", new_user_path %> or <%= link_to "Log in", new_session_path %></p>
+
+<% end %>
+
+<h1>Here are all products:</h1>
+
+<% @products.each do |product| %>
+
+    <%= link_to image_tag(product.image_url, size: "100x150"), product_path(product) %>
+
+    <p><%= product.name %></p>
+    <p><%= product.category %></p>
+    <p><%= product.description %></p>
+    <p><%= product.price %></p>
+
+<% end %>
+

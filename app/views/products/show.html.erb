@@ -1,0 +1,54 @@
+
+<% if @authenticated %>
+
+    <p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %></p>
+
+<% else %>
+
+<p><%= link_to "Sign up", new_user_path %> or <%= link_to "Log in", "/sessions/new?redirect_source=/products/#{@product.id}" %></p>
+
+<% end %>
+<p><%= link_to "Back", products_path %></p>
+
+<h1>Here are the details for <%= @product.name %>:</h1>
+
+    <%= image_tag(@product.image_url, size: "200x300")  %>
+
+    <p><%= @product.name %></p>
+    <p><%= @product.category %></p>
+    <p><%= @product.description %></p>
+    <p><%= @product.price %></p>
+
+<% @reviews.each do |review| %>
+
+
+    <h3><%= review.title %></h3>
+    <p><%= review.content %></p>
+    <p>Submitted by <%= review.user.user_name %> on <%= review.created_at %></p>
+    
+
+<% end %>
+
+<% if @authenticated %>
+
+    <h2>Submit a review for this product:</h2>
+
+    <%= form_for [@product, @product.reviews.new] do |f| %>
+
+        <p><%= f.label 'title', 'Title' %></p>
+        <p><%= f.text_field 'title' %></p>
+
+        <p><%= f.label 'content', 'Review' %></p>
+        <p><%= f.text_area 'content' %></p>
+
+        <p><%= f.hidden_field 'user_id', value: @user %></p>
+
+        <p><%= f.submit 'Submit review' %></p>
+
+    <% end %>
+
+<% else %>
+
+    <p><%= link_to "Log in", "/sessions/new?redirect_source=/products/#{@product.id}" %> to submit a review</p>
+
+<% end %>
