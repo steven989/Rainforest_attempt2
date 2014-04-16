@@ -1,12 +1,12 @@
 
 <% if @authenticated %>
 
-    <p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "See my products" %> </p>
+    <p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "See my products" %> <%= link_to "Add a product", new_product_path %> </p>
 
 
 <% else %>
 
-<p><%= link_to "Sign up", new_user_path %> or <%= link_to "Log in", new_session_path %></p>
+<p><%= link_to "Sign up", new_user_path %> or <%= link_to "Log in", new_session_path %> </p>
 
 <% end %>
 
@@ -20,6 +20,14 @@
     <p><%= product.category %></p>
     <p><%= product.description %></p>
     <p><%= product.price %></p>
+
+    <% if @authenticated %>
+        <% if User.find_by(id:session[:user_id]).products.include?(product) %>
+
+            <p><%= link_to "Update", edit_product_path(product) %> <%= link_to "Delete", product_path(product), method:'delete' %></p>
+
+        <% end %>
+    <% end %>
 
 <% end %>
 

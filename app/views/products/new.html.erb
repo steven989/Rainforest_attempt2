@@ -1,0 +1,7 @@
+<p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %></p>
+
+<p><%= link_to "Back", products_path%></p>
+
+<h1>Add your product below:</h1>
+
+<%= render 'shared/product_info' %>
