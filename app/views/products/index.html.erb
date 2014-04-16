@@ -1,8 +1,15 @@
 
 <% if @authenticated %>
 
+    <% if flash[:notice] %>
+
+        <p><%= flash[:notice] %> <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Delete my account", user_path(session[:user_id]), method:'delete' %> <%= link_to "See my products" %> <%= link_to "Add a product", new_product_path %></p>
+
+    <% else %>
+
     <p>Welcome back <%= Userinfo.find_by(user_id: session[:user_id]).first_name.capitalize %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Delete my account", user_path(session[:user_id]), method:'delete' %> <%= link_to "See my products" %> <%= link_to "Add a product", new_product_path %> </p>
 
+    <% end %>
 
 <% else %>
 

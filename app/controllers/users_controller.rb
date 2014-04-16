@@ -16,7 +16,7 @@ class UsersController < ApplicationController
                 if @user_info.save
                 session[:user_id] = @user.id
                 session[:expire_on] = SESSION_EXPIRY_MINUTES.minutes.from_now
-                redirect_to products_path
+                redirect_to products_path, :notice => "Sign up successful. Welcome #{@user.userinfo.first_name}!"
                 else
                 render :action => :new
                 end
