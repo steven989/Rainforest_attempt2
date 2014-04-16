@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
 
         @product = Product.find_by(id: params[:id])
 
-        @reviews = @product.reviews
+        @reviews = @product.reviews.order(:created_at => :desc)
 
         @user = session[:user_id]
         
