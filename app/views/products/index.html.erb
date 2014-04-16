@@ -7,7 +7,7 @@
 
     <% else %>
 
-    <p>Welcome back <%= Userinfo.find_by(user_id: session[:user_id]).first_name.capitalize %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Delete my account", user_path(session[:user_id]), method:'delete' %> <%= link_to "See my products" %> <%= link_to "Add a product", new_product_path %> </p>
+    <p><%= render "shared/top_banner" %></p>
 
     <% end %>
 
@@ -19,22 +19,4 @@
 
 <h1>Here are all products:</h1>
 
-<% @products.each do |product| %>
-
-    <%= link_to image_tag(product.image_url, size: "100x150"), product_path(product) %>
-
-    <p><%= product.name %></p>
-    <p><%= product.category %></p>
-    <p><%= product.description %></p>
-    <p><%= product.price %></p>
-
-    <% if @authenticated %>
-        <% if User.find_by(id:session[:user_id]).products.include?(product) %>
-
-            <p><%= link_to "Update", edit_product_path(product) %> <%= link_to "Delete", product_path(product), method:'delete' %></p>
-
-        <% end %>
-    <% end %>
-
-<% end %>
-
+<%= render "shared/show_products" %>

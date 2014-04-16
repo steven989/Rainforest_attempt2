@@ -1,7 +1,7 @@
 
 <% if @authenticated %>
 
-    <p>Welcome back <%= Userinfo.find_by(user_id: session[:user_id]).first_name.capitalize %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Add a product", new_product_path %> </p>
+    <p><%= render "shared/top_banner" %></p>
 
 <% else %>
 
@@ -12,12 +12,12 @@
 
 <h1>Here are the details for <%= @product.name %>:</h1>
 
-    <%= image_tag(@product.image_url, size: "200x300")  %>
+    <%= image_tag(@product.image_url, height: "360")  %>
 
     <p><%= @product.name %></p>
     <p><%= @product.category %></p>
     <p><%= @product.description %></p>
-    <p><%= @product.price %></p>
+    <p><%= @product.show_price %></p>
             
     <% if @authenticated %>
         <% if User.find_by(id:session[:user_id]).products.include?(@product) %>

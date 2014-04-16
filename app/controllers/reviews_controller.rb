@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
 
+    before_filter :authenticate
+
     def create
 
         @product = Product.find_by(id: params[:product_id])

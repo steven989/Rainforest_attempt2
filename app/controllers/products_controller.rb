@@ -21,17 +21,26 @@ class ProductsController < ApplicationController
     def new
     
         @product = Product.new
+        flash[:user_id] = session[:user_id] #passing the user ID so that it can be logged with the product in the create action
 
     end 
 
     def create
 
-        @product = Product.new(product_params)
+        @product = Product.new(product_params.merge(user_id: flash[:user_id]))
+        
+        unless @product.price.nil?
+        @product.price = (@product.price * 100).to_i
+         end
 
         if @product.save
             redirect_to product_path(@product)
         else 
+            
+            @errors = @product.errors.messages
+
             render 'new'
+
         end 
 
     end 

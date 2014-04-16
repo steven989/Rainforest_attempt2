@@ -4,4 +4,14 @@
 
 <h1>Add your product below:</h1>
 
+<% if @errors %>
+
+    <% @errors.each do |error| %>
+
+        <b><p><%= error.join(" ") %></p></b>
+
+    <% end %>    
+
+<% end %>
+
 <%= render 'shared/product_info' %>

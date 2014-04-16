@@ -8,9 +8,8 @@ RainforestAttempt2::Application.routes.draw do
 
   end 
 
-  get '/products_by_user' => 'products#user_index'
 
-  resources :users, only: [:new, :create, :destroy]
+  resources :users, only: [:new, :create, :destroy, :show]
 
   resources :sessions, only: [:new, :create, :destroy]
 

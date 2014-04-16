@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+    before_filter :authenticate
 
     def new
         @user = User.new
@@ -44,6 +45,17 @@ class UsersController < ApplicationController
         Userinfo.find_by(user_id: @user_id).update_attributes(active_status: 0)
 
         redirect_to products_path
+
+    end 
+
+    def show
+
+        @user = User.find_by(id:params[:id])
+        @user_info = @user.userinfo
+        @count_products = @user.products.count
+        @count_reviews = @user.reviews.count
+
+        @products = @user.products
 
     end 
 

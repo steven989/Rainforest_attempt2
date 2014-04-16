@@ -1,3 +1,9 @@
+<% if @authenticated %>
+<%= render 'shared/top_banner' %>
+<% end %>
+
+<p><%= link_to "Back", product_path(@product) %></p>
+
 <h1>Update your review below:</h1>
 
     <%= form_for [@product, @review] do |f| %>
