@@ -6,10 +6,22 @@
     <p><%= f.text_field 'user_name' %></p>
 
     <p><%= f.label 'password', 'Password' %></p>
-    <p><%= f.text_field 'password' %></p>
+    <p><%= f.password_field 'password' %></p>
 
     <p><%= f.label 'password_confirmation', 'Password Confirmation' %></p>
-    <p><%= f.text_field 'password_confirmation' %></p>
+    <p><%= f.password_field 'password_confirmation' %></p>
+
+    <%= fields_for Userinfo.new do |f| %>
+
+        <p><%= f.label 'first_name', 'First Name' %></p>
+        <p><%= f.text_field 'first_name' %></p>
+
+        <p><%= f.label 'last_name', 'Last Name' %></p>
+        <p><%= f.text_field 'last_name' %></p>
+
+        <%= f.hidden_field 'active_status', value:1 %>
+
+    <% end %>
 
     <p><%= f.submit %></p>
 

@@ -1,7 +1,7 @@
 
 <% if @authenticated %>
 
-    <p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Add a product", new_product_path %> </p>
+    <p>Welcome back <%= Userinfo.find_by(user_id: session[:user_id]).first_name.capitalize %>! <%= link_to "Log out", session_path('current'), method: 'delete' %> <%= link_to "Add a product", new_product_path %> </p>
 
 <% else %>
 
@@ -19,16 +19,30 @@
     <p><%= @product.description %></p>
     <p><%= @product.price %></p>
             
-<p><%= link_to "Update", edit_product_path(@product) %> <%= link_to "Delete", product_path(@product), method:'delete' %></p>
+    <% if @authenticated %>
+        <% if User.find_by(id:session[:user_id]).products.include?(@product) %>
 
+            <p><%= link_to "Update", edit_product_path(@product) %> <%= link_to "Delete", product_path(@product), method:'delete' %></p>
+
+        <% end %>
+    <% end %>
 
 <% @reviews.each do |review| %>
 
 
     <h3><%= review.title %></h3>
     <p><%= review.content %></p>
-    <p>Submitted by <%= review.user.user_name %> on <%= review.created_at %></p>
-    
+    <p>Submitted by <%= review.user.userinfo.first_name + " " + review.user.userinfo.last_name %> on <%= review.created_at %></p>
+
+    <% if @authenticated %>
+        <% if User.find_by(id:session[:user_id]).reviews.include?(review) %>
+
+            <p><%= link_to "Update", edit_product_review_path(@product,review) %> <%= link_to "Delete", product_review_path(@product,review), method:'delete' %></p>
+
+        <% end %>
+    <% end %>
+ 
+
 
 <% end %>
 

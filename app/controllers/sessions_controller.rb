@@ -9,13 +9,12 @@ class SessionsController < ApplicationController
 
     def create
 
-
-        user = User.find_by(user_name: params[:user_name]) 
+        user = User.where(user_name: params[:user_name]).joins(:userinfo).merge(Userinfo.where(active_status:1)).take
 
         if user && user.authenticate(params[:password])
 
             session[:user_id] = user.id
-            session[:expire_on] = 15.minutes.from_now
+            session[:expire_on] = SESSION_EXPIRY_MINUTES.minutes.from_now
 
             redirect_to params[:redirect_source] == nil ? products_path : params[:redirect_source]
 

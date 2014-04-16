@@ -1,4 +1,4 @@
-<p>Welcome back <%= User.find_by(id: session[:user_id]).user_name %>! <%= link_to "Log out", session_path('current'), method: 'delete' %></p>
+<p>Welcome back <%= Userinfo.find_by(user_id: session[:user_id]).first_name.capitalize %>! <%= link_to "Log out", session_path('current'), method: 'delete' %></p>
 
 <p><%= link_to "Back", products_path%></p>
 
