@@ -1,4 +1,14 @@
 
+<% if @errors %>
+
+<% @errors.each do |error| %>
+
+    <b><p><%= error.join(" ") %></p></b>
+
+<% end %>
+
+<% end %>
+
 
 <%= form_for @user do |f| %>
 
@@ -26,3 +36,5 @@
     <p><%= f.submit %></p>
 
 <% end %>
+
+<p><%= link_to "Back", products_path %></p>

@@ -18,9 +18,19 @@ class UsersController < ApplicationController
                 session[:expire_on] = SESSION_EXPIRY_MINUTES.minutes.from_now
                 redirect_to products_path, :notice => "Sign up successful. Welcome #{@user.userinfo.first_name}!"
                 else
+                
+                User.delete(@user)
+                @user = User.new
+
+                @errors = @user_info.errors.messages
+
                 render :action => :new
+
                 end
         else
+
+            @errors = @user.errors.messages
+
             render :action => :new
         end
 
